@@ -29,6 +29,7 @@ alert(msg);
 // 아래에 getItemByAmount 함수를 작성하세요.
 function getItemByAmount(data, amount){
     let goodsPrice = 0; // 0원으로 초기화
+    let goodsName;
     for(let i = 0; i < data.length; i++){ // data 만큼 반복문 실행
         if(data[i].price <= amount) // 입력한 값보다 작거나 같은 가격 중에서
             if(data[i].price > goodsPrice) // 이전 가격보다 값이 크면
@@ -41,9 +42,9 @@ function getItemByAmount(data, amount){
 
     for(let i = 0; i < data.length; i++){
         if(data[i].price === goodsPrice){
-            const goodsName = data[i].name;
+            goodsName = data[i].name;
         }
     }
 
-    return {amount, goodsName, goodsPrice};
+    return {name: goodsName, price: goodsPrice};
 }
