@@ -1,3 +1,6 @@
 # KDT_HW
 
-2021.07.21~2021.07.23 report
+This is the K - digital Progrmming submission repository
+
+1st : github header
+2nd : calculate menu
