@@ -27,10 +27,11 @@
 from NaverNewsCrawler import NaverNewsCrawler
 
 ####사용자로 부터 기사 수집을 원하는 키워드를 input을 이용해 입력받아 ? 부분에 넣으세요
-crawler = NaverNewsCrawler(?)
+crawler = NaverNewsCrawler(input('Input news keyword : '))
 
 #### 수집한 데이터를 저장할 엑셀 파일명을 input을 이용해 입력받아 ? 부분에 넣으세요
-crawler.get_news(?)
+excelName = input('Input excel name : ')
+crawler.get_news(excelName)
 
 #### 아래코드를 실행해 이메일 발송 기능에 필요한 모듈을 임포트하세요.
 from email.mime.text import MIMEText
@@ -83,7 +84,17 @@ def send_mail(name, addr, subject, contents, attachment=None):
 
 
 #### 엑셀 파일의 정보를 읽어올 수 있는 모듈을 import하세요.
+from openpyxl import load_workbook
+
+#### read excel file and save name, address
+wb = load_workbook('email list_fastcampus news.xlsx')
+data = wb.active
+name = [data['B3'].value, data['B4'].value, data['B5'].value]
+addr = [data['C3'].value, data['C4'].value, data['C5'].value]
+contents = '요약파일입니다. '
+
 
 
 #### email_list.xlsx 파일을 읽어와 해당 사람들에게 수집한 뉴스 정보 엑셀 파일을 send_mail 함수를 이용해 전송하세요.
-send_mail()
+for i in range(2):
+    send_mail(name[i], addr[i], '요약파일입니다.', contents, excelName)
