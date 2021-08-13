@@ -31,6 +31,9 @@ crawler = NaverNewsCrawler(input('Input news keyword : '))
 
 #### 수집한 데이터를 저장할 엑셀 파일명을 input을 이용해 입력받아 ? 부분에 넣으세요
 excelName = input('Input excel name : ')
+if not ".xlsx" in excelName:
+    excelName = excelName + '.xlsx'
+
 crawler.get_news(excelName)
 
 #### 아래코드를 실행해 이메일 발송 기능에 필요한 모듈을 임포트하세요.
@@ -42,8 +45,8 @@ import re
 #### gmail 발송 기능에 필요한 계정 정보를 아래 코드에 입력하세요.
 SMTP_SERVER = 'smtp.gmail.com'
 SMTP_PORT = 465
-SMTP_USER = 'sck04184@gmail.com'
-SMTP_PASSWORD = 'gnpehfbxhywzbzao'
+SMTP_USER = "YOUR_EMAIL"
+SMTP_PASSWORD = "YOUR_EMAIL_PASSWORD"
 
 #### 아래 코드를 실행해 메일 발송에 필요한 send_mail 함수를 만드세요.
 def send_mail(name, addr, subject, contents, attachment=None):
@@ -89,12 +92,18 @@ from openpyxl import load_workbook
 #### read excel file and save name, address
 wb = load_workbook('email list_fastcampus news.xlsx')
 data = wb.active
-name = [data['B3'].value, data['B4'].value, data['B5'].value]
-addr = [data['C3'].value, data['C4'].value, data['C5'].value]
+nameList = list()
+addrList = list()
+colB = data['B']
+colC = data['C']
+for cell in colB:
+    nameList.append(cell.value)
+for cell in colC:
+    addrList.append(cell.value)
 contents = '요약파일입니다. '
 
 
 
 #### email_list.xlsx 파일을 읽어와 해당 사람들에게 수집한 뉴스 정보 엑셀 파일을 send_mail 함수를 이용해 전송하세요.
-for i in range(2):
-    send_mail(name[i], addr[i], '요약파일입니다.', contents, excelName)
+for i in range(2, 5):
+    send_mail(nameList[i], addrList[i], '요약파일입니다.', contents, excelName)
