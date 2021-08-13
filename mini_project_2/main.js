@@ -14,7 +14,7 @@ const data = [
 
 // 사용자 입력 받기
 const line = prompt('최대 금액을 입력해주세요.');
-const amount = +line;
+const amount = parseInt(line)
 
 // 주어진 금액으로 살 수 있는 가장 비싼 상품을 구함
 const item = getItemByAmount(data, amount);
@@ -25,8 +25,10 @@ const msg = item ?
 
 // 결과 출력
 alert(msg);
+console.log(msg);
 
 // 아래에 getItemByAmount 함수를 작성하세요.
+/*
 function getItemByAmount(data, amount){
     let goodsPrice = 0; // 0원으로 초기화
     let goodsName;
@@ -47,4 +49,21 @@ function getItemByAmount(data, amount){
     }
 
     return {name: goodsName, price: goodsPrice};
+}*/
+
+function getItemByAmount(data, amount){
+        let goodsPrice = 0;
+        let index_result = 0;
+        for(let i = 0; i < data.length; i++){
+            if(data[i].price<=amount)
+                if(data[i].price > goodsPrice) {
+                    index_result = i;
+                    goodsPrice = data[index_result].price;
+                }
+        }
+
+    if(goodsPrice === 0)
+        return;
+
+    return {name: data[index_result].name, price: data[index_result].price};
 }
